@@ -43,7 +43,7 @@ public class EV3Bot
 		displayMessage("Circles!");
 		Motor.A.forward();
 		Motor.B.backward();
-		Delay.msDelay(waitTime + 6);
+		Delay.msDelay(waitTime + 6000);
 	}
 	
 	private void drive()
@@ -51,6 +51,6 @@ public class EV3Bot
 		displayMessage("Driving forward!");
 		Motor.A.forward();
 		Motor.B.forward();
-		Delay.msDelay(waitTime + 6);
+		Delay.msDelay(waitTime + 6000);
 	}
 }
