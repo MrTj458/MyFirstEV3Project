@@ -10,6 +10,7 @@ public class EV3Bot
 	private int xPosition;
 	private int yPosition;
 	private long waitTime;
+	private int obstacleDistance;
 	
 	public EV3Bot()
 	{
@@ -17,13 +18,30 @@ public class EV3Bot
 		this.xPosition = 50;
 		this.yPosition = 50;
 		this.waitTime = 4000;
+		this.obstacleDistance = 8;
+		
+		displayMessage();
 	}
 	
 	public void driveRoom()
 	{
-		displayMessage();
-		circles();
-		drive();
+		displayMessage("DriveRoom!");
+		
+		if(obstacleDistance < 6)
+		{
+			while(obstacleDistance < 6)
+			{
+				Motor.A.forward();
+				Motor.B.backward();
+			}
+		}
+		else
+		{
+			Motor.A.forward();
+			Motor.B.forward();
+		}
+		
+		dance();
 	}
 	
 	private void displayMessage()
@@ -38,12 +56,31 @@ public class EV3Bot
 		Delay.msDelay(waitTime);
 	}
 	
-	private void circles()
+	private void dance()
 	{
-		displayMessage("Circles!");
 		Motor.A.forward();
 		Motor.B.backward();
-		Delay.msDelay(waitTime + 6000);
+		Delay.msDelay(1000);
+		Motor.A.stop();
+		Motor.B.stop();
+		Motor.B.forward();
+		Motor.A.forward();
+		Delay.msDelay(1000);
+		Motor.A.stop();
+		Motor.B.stop();
+		Motor.B.forward();
+		Motor.A.backward();
+		Delay.msDelay(2000);
+		Motor.B.stop();
+		Motor.A.stop();
+		Motor.A.forward();
+		Motor.B.forward();
+		Delay.msDelay(1000);
+		Motor.A.forward();
+		Motor.A.backward();
+		Delay.msDelay(1000);
+		Motor.A.stop();
+		Motor.B.stop();
 	}
 	
 	private void drive()
