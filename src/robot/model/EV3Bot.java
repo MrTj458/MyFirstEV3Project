@@ -2,8 +2,16 @@ package robot.model;
 
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.Motor;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 
+/**
+ * @author thod0127
+ * @vesion 0.2 Jan 5 2016
+ */
 public class EV3Bot
 {
 	private String botMessage;
@@ -11,6 +19,7 @@ public class EV3Bot
 	private int yPosition;
 	private long waitTime;
 	private int obstacleDistance;
+	private MovePilot botPilot;
 	
 	public EV3Bot()
 	{
@@ -20,6 +29,7 @@ public class EV3Bot
 		this.waitTime = 4000;
 		this.obstacleDistance = 8;
 		
+		setupPilot();
 		displayMessage();
 	}
 	
@@ -27,21 +37,15 @@ public class EV3Bot
 	{
 		displayMessage("DriveRoom!");
 		
-		if(obstacleDistance < 6)
-		{
-			while(obstacleDistance < 6)
-			{
-				Motor.A.forward();
-				Motor.B.backward();
-			}
-		}
-		else
-		{
-			Motor.A.forward();
-			Motor.B.forward();
-		}
-		
-		dance();
+		botPilot.travel(100);
+	}
+	
+	private void setupPilot()
+	{
+		Wheel leftWheel = WheeledChassis.modelWheel(Motor.A, 43.2).offset(-72);
+		Wheel rightWheel = WheeledChassis.modelWheel(Motor.B, 43.2).offset(72);
+		Chassis baseChassis = new WheeledChassis(new Wheel []{leftWheel, rightWheel}, WheeledChassis.TYPE_DIFFERENTIAL);
+		botPilot = new MovePilot(baseChassis);
 	}
 	
 	private void displayMessage()
@@ -54,40 +58,11 @@ public class EV3Bot
 	{
 		LCD.drawString(message, xPosition, yPosition);
 		Delay.msDelay(waitTime);
+		LCD.clear();
 	}
 	
 	private void dance()
 	{
-		Motor.A.forward();
-		Motor.B.backward();
-		Delay.msDelay(1000);
-		Motor.A.stop();
-		Motor.B.stop();
-		Motor.B.forward();
-		Motor.A.forward();
-		Delay.msDelay(1000);
-		Motor.A.stop();
-		Motor.B.stop();
-		Motor.B.forward();
-		Motor.A.backward();
-		Delay.msDelay(2000);
-		Motor.B.stop();
-		Motor.A.stop();
-		Motor.A.forward();
-		Motor.B.forward();
-		Delay.msDelay(1000);
-		Motor.A.forward();
-		Motor.A.backward();
-		Delay.msDelay(1000);
-		Motor.A.stop();
-		Motor.B.stop();
-	}
-	
-	private void drive()
-	{
-		displayMessage("Driving forward!");
-		Motor.A.forward();
-		Motor.B.forward();
-		Delay.msDelay(waitTime + 6000);
+		
 	}
 }
