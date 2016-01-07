@@ -1,7 +1,9 @@
 package robot.model;
 
+import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.Motor;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
@@ -19,7 +21,9 @@ public class EV3Bot
 	private int yPosition;
 	private long waitTime;
 	private int obstacleDistance;
+	
 	private MovePilot botPilot;
+	private EV3UltrasonicSensor distanceSensor;
 	
 	public EV3Bot()
 	{
@@ -29,6 +33,8 @@ public class EV3Bot
 		this.waitTime = 4000;
 		this.obstacleDistance = 8;
 		
+		distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
+		
 		setupPilot();
 		displayMessage();
 	}
@@ -37,7 +43,14 @@ public class EV3Bot
 	{
 		displayMessage("DriveRoom!");
 		
-		botPilot.travel(100);
+		if(distanceSensor.getDistanceMode() < 2)
+		{
+			
+		}
+		else
+		{
+			
+		}
 	}
 	
 	private void setupPilot()
