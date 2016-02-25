@@ -16,14 +16,24 @@ import lejos.utility.Delay;
  */
 public class EV3Bot
 {
+	/*
+	 * Display
+	 */
 	private String botMessage;
 	private int xPosition;
 	private int yPosition;
 	private long waitTime;
-	private int obstacleDistance;
 	
+	/*
+	 * Driving
+	 */
 	private MovePilot botPilot;
+	
+	/*
+	 * Sample section
+	 */
 	private EV3UltrasonicSensor distanceSensor;
+	private float [] ultrasonicSamples;
 	
 	public EV3Bot()
 	{
@@ -31,32 +41,36 @@ public class EV3Bot
 		this.xPosition = 50;
 		this.yPosition = 50;
 		this.waitTime = 4000;
-		this.obstacleDistance = 8;
 		
 		distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
-		
+		distanceSensor.enable();
 		setupPilot();
-		displayMessage();
 	}
 	
 	public void driveRoom()
 	{
 		displayMessage("DriveRoom!");
-		
-		if(distanceSensor.getDistanceMode() < 2)
+		distanceSensor.fetchSample(ultrasonicSamples, 0);
+		if(ultrasonicSamples[0] < 2.5)
 		{
-			
+			botPilot.travel(431.4);
+			botPilot.rotate(90);
+			botPilot.travel(575.2);
+			botPilot.rotate(-90);
+			botPilot.travel(345.1);
+			botPilot.rotate(90);
+			botPilot.travel(93.4);
 		}
 		else
 		{
-			
+			botPilot.travel(254);
 		}
 	}
 	
 	private void setupPilot()
 	{
-		Wheel leftWheel = WheeledChassis.modelWheel(Motor.A, 43.2).offset(-72);
-		Wheel rightWheel = WheeledChassis.modelWheel(Motor.B, 43.2).offset(72);
+		Wheel leftWheel = WheeledChassis.modelWheel(Motor.A, 55).offset(-72);
+		Wheel rightWheel = WheeledChassis.modelWheel(Motor.B, 55).offset(72);
 		Chassis baseChassis = new WheeledChassis(new Wheel []{leftWheel, rightWheel}, WheeledChassis.TYPE_DIFFERENTIAL);
 		botPilot = new MovePilot(baseChassis);
 	}
