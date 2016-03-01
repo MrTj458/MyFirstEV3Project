@@ -43,6 +43,7 @@ public class EV3Bot
 		this.waitTime = 4000;
 		
 		distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
+		ultrasonicSamples = new float[distanceSensor.sampleSize()];
 		distanceSensor.enable();
 		setupPilot();
 	}
@@ -51,19 +52,19 @@ public class EV3Bot
 	{
 		displayMessage("DriveRoom!");
 		distanceSensor.fetchSample(ultrasonicSamples, 0);
-		if(ultrasonicSamples[0] < 2.5)
+		if(ultrasonicSamples[0] < 5)
 		{
-			botPilot.travel(431.4);
-			botPilot.rotate(90);
-			botPilot.travel(575.2);
-			botPilot.rotate(-90);
-			botPilot.travel(345.1);
-			botPilot.rotate(90);
-			botPilot.travel(93.4);
+			
 		}
 		else
 		{
-			botPilot.travel(254);
+			botPilot.travel(4310.4);
+			botPilot.rotate(-90);
+			botPilot.travel(5950.2);
+			botPilot.rotate(90);
+			botPilot.travel(3450.1);
+			botPilot.rotate(-90);
+			botPilot.travel(930.4);
 		}
 	}
 	
