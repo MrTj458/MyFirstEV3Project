@@ -23,6 +23,7 @@ public class EV3Bot
 	private int xPosition;
 	private int yPosition;
 	private long waitTime;
+	private long turnWaitTime;
 	
 	/*
 	 * Driving
@@ -41,6 +42,7 @@ public class EV3Bot
 		this.xPosition = 50;
 		this.yPosition = 50;
 		this.waitTime = 4000;
+		this.turnWaitTime = 500;
 		
 		distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
 		ultrasonicSamples = new float[distanceSensor.sampleSize()];
@@ -58,13 +60,19 @@ public class EV3Bot
 		}
 		else
 		{
-			botPilot.travel(4310.4);
+			botPilot.travel(4410.4);
+			Delay.msDelay(turnWaitTime);
 			botPilot.rotate(-90);
-			botPilot.travel(5950.2);
+			Delay.msDelay(turnWaitTime);
+			botPilot.travel(6000.2);
+			Delay.msDelay(turnWaitTime);
 			botPilot.rotate(90);
-			botPilot.travel(3450.1);
+			Delay.msDelay(turnWaitTime);
+			botPilot.travel(3550.1);
+			Delay.msDelay(turnWaitTime);
 			botPilot.rotate(-90);
-			botPilot.travel(930.4);
+			Delay.msDelay(turnWaitTime);
+			botPilot.travel(950.4);
 		}
 	}
 	
