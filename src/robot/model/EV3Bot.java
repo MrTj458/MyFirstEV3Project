@@ -39,8 +39,8 @@ public class EV3Bot
 	public EV3Bot()
 	{
 		this.botMessage = "Lejos!";
-		this.xPosition = 50;
-		this.yPosition = 50;
+		this.xPosition = 0;
+		this.yPosition = 2;
 		this.waitTime = 4000;
 		this.turnWaitTime = 500;
 		
@@ -56,7 +56,19 @@ public class EV3Bot
 		distanceSensor.fetchSample(ultrasonicSamples, 0);
 		if(ultrasonicSamples[0] < 5)
 		{
-			
+			botPilot.travel(950.4);
+			Delay.msDelay(turnWaitTime);
+			botPilot.rotate(90);
+			Delay.msDelay(turnWaitTime);
+			botPilot.travel(3550.1);
+			Delay.msDelay(turnWaitTime);
+			botPilot.rotate(-90);
+			Delay.msDelay(turnWaitTime);
+			botPilot.travel(6000.2);
+			Delay.msDelay(turnWaitTime);
+			botPilot.rotate(90);
+			Delay.msDelay(turnWaitTime);
+			botPilot.travel(4410.4);
 		}
 		else
 		{
