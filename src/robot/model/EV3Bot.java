@@ -88,6 +88,14 @@ public class EV3Bot
 		}
 	}
 	
+	public void driveAround()
+	{
+		while(LocalEV3.get().getKeys().waitForAnyPress() != LocalEV3.get().getKeys().ID_ESCAPE)
+		{
+			
+		}
+	}
+	
 	private void setupPilot()
 	{
 		Wheel leftWheel = WheeledChassis.modelWheel(Motor.A, 55).offset(-72);
